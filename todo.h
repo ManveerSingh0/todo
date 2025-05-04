@@ -1,7 +1,8 @@
 #ifndef TODO_H
 #define TODO_H
 // std libraries
-#include <iostream>
+#include <iostream> 
+#include <vector>
 
 
 // Qt libraries
@@ -28,6 +29,8 @@ private slots:
   void add_task();
   void delete_task();
   void save_tasks();
+  bool is_duplicate(QString);
+private:
   void show_input_area();
   void buttons();
 
@@ -39,7 +42,12 @@ private:
 
   //Buttoons To add and remove Tasks
   QPushButton* add_button;
-  QPushButton* delete_button;
+  QPushButton *delete_button;
+
+  std::vector<QString> not_duplicate;
+
+
+
 };
 
 
