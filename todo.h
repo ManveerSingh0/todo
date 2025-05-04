@@ -2,7 +2,7 @@
 #define TODO_H
 // std libraries
 #include <iostream> 
-#include <vector>
+#include <unordered_set>
 
 
 // Qt libraries
@@ -29,7 +29,6 @@ private slots:
   void add_task();
   void delete_task();
   void save_tasks();
-  bool is_duplicate(QString);
 private:
   void show_input_area();
   void buttons();
@@ -44,10 +43,8 @@ private:
   QPushButton* add_button;
   QPushButton *delete_button;
 
-  std::vector<QString> not_duplicate;
-
-
-
+  std::unordered_set<QString> not_duplicate;
+  
 };
 
 

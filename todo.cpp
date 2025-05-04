@@ -36,27 +36,20 @@ Todo::Todo(QMainWindow* parent) : QMainWindow(parent) {
 void Todo::add_task() {
   QString input_text = this->task_input->text();
 
-  if (!input_text.isEmpty() && !is_duplicate(input_text)) {
+  if (!input_text.isEmpty()&& not_duplicate.find(input_text) == not_duplicate.end()) {
     QListWidgetItem *item = new QListWidgetItem(input_text);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
     item->setCheckState(Qt::Unchecked);
     task_list->addItem(item);
-    not_duplicate.push_back(input_text);
+
+
+    not_duplicate.insert(input_text);
   } else {
     std::cout << "Enter Text\n";
   }
 }
 
 
-bool Todo::is_duplicate(QString string) {
-  for (int i = 0; i < not_duplicate.size(); i++) {
-    if (not_duplicate.at(i) == string) {
-      return true;
-    }
-  }
-
-  return false;
-}
 
 
 void Todo::delete_task() {
