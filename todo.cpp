@@ -1,8 +1,6 @@
 #include "todo.h"
-#include <QWidget>
-#include <QVBoxLayout>
-#include <qboxlayout.h>
-#include <QHBoxLayout>
+#include <qnamespace.h>
+
 
 Todo::Todo(QMainWindow* parent) : QMainWindow(parent) {
   /*
@@ -18,6 +16,8 @@ Todo::Todo(QMainWindow* parent) : QMainWindow(parent) {
   this->buttons();
   
 
+  this->task_list = new QListWidget();
+
 
   //QVBoxLayout  manages layout for QLineEdit and QListWidgetItem
   QVBoxLayout* v_layout = new QVBoxLayout(this->central_widget);
@@ -28,13 +28,26 @@ Todo::Todo(QMainWindow* parent) : QMainWindow(parent) {
   h_layout->addWidget(this->delete_button);
 
   v_layout->addLayout(h_layout);
+  v_layout->addWidget(this->task_list);
 
 
 }
 
 void Todo::add_task() {
+  QString input_text = this->task_input->text();
 
+  if (!input_text.isEmpty()) {
+    QListWidgetItem *item = new QListWidgetItem(input_text);
+    item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+    item->setCheckState(Qt::Unchecked);
+    task_list->addItem(item);
+  } else {
+    std::cout << "Enter Text\n";
+  }
 }
+
+
+
 void Todo::delete_task() {
 
 }

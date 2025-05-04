@@ -9,6 +9,12 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <qboxlayout.h>
+#include <QHBoxLayout>
+#include <QListWidgetItem>
+
 
 
 class Todo : public QMainWindow {
