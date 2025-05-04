@@ -50,11 +50,42 @@ void Todo::add_task() {
 }
 
 
-
-
 void Todo::delete_task() {
+    // Get all checked items
+    QList<QListWidgetItem*> checkedItems;
+    
+    // Loop through all items in the list
+    for(int i = 0; i < task_list->count(); ++i) {
+        QListWidgetItem* item = task_list->item(i);
+        if(item->checkState() == Qt::Checked) {
+            checkedItems.append(item);
+        }
+    }
 
+    // Delete checked items safely
+    for(QListWidgetItem* item : checkedItems) {
+        // Remove from duplicate tracker
+        not_duplicate.erase(item->text());  // For std::unordered_set
+        
+        // Get the current row of the item
+        int row = task_list->row(item);
+        if (row >= 0) {  // Ensure the row is valid
+            QListWidgetItem* takenItem = task_list->takeItem(row);
+            delete takenItem;  // Safely delete the item
+        } else {
+            qDebug() << "Item not found in list:" << item->text();
+        }
+    }
+
+    // Optional: Show message if no checked items
+    if(checkedItems.isEmpty()) {
+        qDebug() << "No checked items found";
+    }
 }
+
+
+
+
 void Todo::save_tasks() {}
 
 
@@ -65,9 +96,9 @@ void Todo::show_input_area() {
 
 void Todo::buttons() {
   this->add_button = new QPushButton("Add Task");
-  QObject::connect(add_button, &QPushButton::clicked, this, &this->add_task);
+  QObject::connect(add_button, &QPushButton::clicked, this, &Todo::add_task);
 
 
   this->delete_button = new QPushButton("Delete Task");
-  QObject::connect(delete_button, &QPushButton::clicked, this, &this->delete_task);
+  QObject::connect(delete_button, &QPushButton::clicked, this, &Todo::delete_task);
 }
